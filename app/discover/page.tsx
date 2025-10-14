@@ -4,97 +4,126 @@ export default function DiscoverPage() {
 			<div className="max-w-4xl mx-auto px-4 py-16">
 				{/* Title */}
 				<h1 className="text-5xl font-bold text-gray-900 mb-6 text-center">
-					Discover your app
+					YouTube Shorts Transcript Extractor
 				</h1>
 				{/* Main Description Card */}
 				<div className="bg-white rounded-xl p-8 shadow-md text-center mb-16">
 					<p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
-						This is your app's discover page—showcase what your app does and how
-						it helps creators.
+						Extract transcripts from the top 25 most viral YouTube Shorts from any channel—instantly.
 					</p>
 					<p className="text-base text-gray-500 max-w-2xl mx-auto mb-2">
-						Share real success stories, link to thriving Whop communities using
-						your app, and add referral links to earn affiliate fees when people
-						install your app.
+						Perfect for content creators, marketers, and researchers who want to analyze
+						viral content strategies. Get full transcripts, view counts, and rankings
+						for any YouTube channel's most successful Shorts.
 					</p>
 					<p className="text-sm text-gray-400 max-w-2xl mx-auto">
-						💡 <strong>Tip:</strong> Clearly explain your app's value
-						proposition and how it helps creators make money or grow their
-						communities.
+						💡 <strong>Powered by:</strong> YouTube Data API v3 & TranscriptAPI.com
+						for professional-grade transcript extraction
 					</p>
 				</div>
 
-				{/* Pro Tips Section */}
+				{/* Features Section */}
 				<div className="grid md:grid-cols-2 gap-6 mb-10">
 					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col gap-2">
 						<h3 className="font-semibold text-gray-900">
-							Showcase Real Success
+							⚡ Instant Analysis
 						</h3>
 						<p className="text-sm text-gray-600">
-							Link to real Whop communities using your app, with revenue and
-							member stats.
+							Scans up to 500 videos per channel to find the top 25 most viral
+							Shorts by view count. Results in under 15 seconds.
 						</p>
 					</div>
 					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col gap-2">
 						<h3 className="font-semibold text-gray-900">
-							Include Referral Links
+							📝 Full Transcripts
 						</h3>
 						<p className="text-sm text-gray-600">
-							Add <code>?a=your_app_id</code> to Whop links to earn affiliate
-							commissions.
+							Professional transcript extraction with 80-100% success rate,
+							depending on creator settings. Download all as JSON.
+						</p>
+					</div>
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col gap-2">
+						<h3 className="font-semibold text-gray-900">
+							📊 Complete Data
+						</h3>
+						<p className="text-sm text-gray-600">
+							Get view counts, publish dates, thumbnails, direct links, and
+							complete rankings for every Short.
+						</p>
+					</div>
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col gap-2">
+						<h3 className="font-semibold text-gray-900">
+							🎯 Any Channel
+						</h3>
+						<p className="text-sm text-gray-600">
+							Works with any YouTube channel URL format: @handles, /channel/,
+							/c/, or /user/ links.
 						</p>
 					</div>
 				</div>
 
 				<h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-					Examples of Success Stories
+					Perfect For
 				</h2>
 
-				{/* Main Content Cards */}
+				{/* Use Cases */}
 				<div className="grid md:grid-cols-2 gap-6">
-					{/* Success Story Card 1 */}
-					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col justify-between">
+					{/* Use Case 1 */}
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col">
 						<div>
 							<h3 className="text-lg font-bold text-gray-900 mb-1">
-								CryptoKings
+								Content Creators
 							</h3>
-							<p className="text-xs text-gray-500 mb-2">Trading Community</p>
+							<p className="text-xs text-gray-500 mb-2">Competitive Research</p>
 							<p className="text-gray-700 mb-4 text-sm">
-								"Grew to{" "}
-								<span className="font-bold text-blue-600">2,500+ members</span>{" "}
-								and <span className="font-bold text-blue-600">$18,000+/mo</span>{" "}
-								with automated signals. Members love the real-time alerts!"
+								Analyze what makes your competitors' Shorts go viral. Study
+								their scripts, hooks, and messaging patterns to improve your own
+								content strategy.
 							</p>
 						</div>
-						<a
-							href="https://whop.com/cryptokings/?a=your_app_id"
-							className="mt-auto block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-center text-sm"
-						>
-							Visit CryptoKings
-						</a>
 					</div>
 
-					{/* Success Story Card 2 */}
-					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col justify-between">
+					{/* Use Case 2 */}
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col">
 						<div>
 							<h3 className="text-lg font-bold text-gray-900 mb-1">
-								SignalPro
+								Marketing Teams
 							</h3>
-							<p className="text-xs text-gray-500 mb-2">Premium Signals</p>
+							<p className="text-xs text-gray-500 mb-2">Trend Analysis</p>
 							<p className="text-gray-700 mb-4 text-sm">
-								"Retention jumped to{" "}
-								<span className="font-bold text-blue-600">92%</span>. Affiliate
-								program brought in{" "}
-								<span className="font-bold text-blue-600">$4,000+</span> last
-								quarter."
+								Research viral content in your niche. Extract transcripts from
+								top performers to identify messaging trends, keywords, and
+								engagement patterns.
 							</p>
 						</div>
-						<a
-							href="https://whop.com/signalpro/?app=your_app_id"
-							className="mt-auto block w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors text-center text-sm"
-						>
-							Visit SignalPro
-						</a>
+					</div>
+
+					{/* Use Case 3 */}
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col">
+						<div>
+							<h3 className="text-lg font-bold text-gray-900 mb-1">
+								Course Creators
+							</h3>
+							<p className="text-xs text-gray-500 mb-2">Content Repurposing</p>
+							<p className="text-gray-700 mb-4 text-sm">
+								Extract transcripts from educational Shorts to repurpose into
+								course materials, blog posts, or social media content.
+							</p>
+						</div>
+					</div>
+
+					{/* Use Case 4 */}
+					<div className="bg-white rounded-xl p-6 shadow-md flex flex-col">
+						<div>
+							<h3 className="text-lg font-bold text-gray-900 mb-1">
+								Agencies
+							</h3>
+							<p className="text-xs text-gray-500 mb-2">Client Reports</p>
+							<p className="text-gray-700 mb-4 text-sm">
+								Generate comprehensive competitor analysis reports for clients.
+								Export all data as JSON for integration into your workflows.
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
