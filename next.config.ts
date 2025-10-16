@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [{ hostname: "**" }],
 	},
+	transpilePackages: ["frosted-ui", "@whop/react"],
 };
 
 export default withWhopAppConfig(nextConfig);
