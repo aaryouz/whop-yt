@@ -33,10 +33,10 @@ export default async function ExperiencePage({
 	// Check if user has access
 	if (!result.hasAccess) {
 		return (
-			<div className="flex justify-center items-center h-screen px-8">
+			<div className="flex justify-center items-center h-screen px-8 bg-[var(--bg-primary)]">
 				<div className="text-center">
-					<h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-					<p className="text-gray-600">
+					<h1 className="text-2xl font-bold mb-4 text-[var(--text-primary)]">Access Denied</h1>
+					<p className="text-[var(--text-secondary)]">
 						You need to purchase access to use this app.
 					</p>
 				</div>
@@ -45,7 +45,7 @@ export default async function ExperiencePage({
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-50 py-8">
+		<div className="min-h-screen bg-[var(--bg-primary)] py-8">
 			<ExtractForm />
 		</div>
 	);

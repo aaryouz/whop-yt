@@ -111,12 +111,12 @@ export default function ExtractForm() {
   return (
     <div className="w-full max-w-6xl mx-auto p-6">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-2">YouTube Shorts Transcript Extractor</h1>
-        <p className="text-gray-600">
+        <h1 className="text-4xl font-bold mb-2 text-[var(--text-primary)]">YouTube Shorts Transcript Extractor</h1>
+        <p className="text-[var(--text-secondary)]">
           Extract transcripts from the most viral shorts from any YouTube channel
         </p>
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800 max-w-2xl mx-auto">
-          <strong>ℹ️ About Transcripts:</strong> Transcript availability depends on creator settings.
+        <div className="mt-4 p-3 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-sm text-[var(--text-secondary)] max-w-2xl mx-auto">
+          <strong className="text-[var(--brand-light)]">ℹ️ About Transcripts:</strong> Transcript availability depends on creator settings.
           Most channels have 80-100% success rate, but some creators disable captions on their Shorts.
         </div>
       </div>
@@ -128,12 +128,12 @@ export default function ExtractForm() {
             value={channelUrl}
             onChange={(e) => setChannelUrl(e.target.value)}
             placeholder="Enter YouTube channel URL (e.g., https://youtube.com/@channelname)"
-            className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-default)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--border-focus)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
             disabled={loading}
           />
 
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-[var(--text-primary)]">
               How many top shorts do you want to extract?
             </label>
 
@@ -149,8 +149,8 @@ export default function ExtractForm() {
                   }}
                   className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
                     limit === value && customLimit === ''
-                      ? 'border-blue-600 bg-blue-50 text-blue-700'
-                      : 'border-gray-300 bg-white text-gray-700 hover:border-blue-400'
+                      ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/10 text-[var(--brand-light)]'
+                      : 'border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:border-[var(--brand-primary)]'
                   }`}
                   disabled={loading}
                 >
@@ -173,21 +173,21 @@ export default function ExtractForm() {
                   }
                 }}
                 placeholder="Custom (1-100)"
-                className="px-4 py-2 w-32 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="px-4 py-2 w-32 bg-[var(--bg-tertiary)] border-2 border-[var(--border-default)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--border-focus)] focus:border-[var(--border-focus)] text-[var(--text-primary)] placeholder:text-[var(--text-tertiary)]"
                 disabled={loading}
               />
             </div>
 
-            <p className="text-xs text-gray-500">
-              💡 Selected: <span className="font-medium text-gray-700">{limit} shorts</span>
-              {limit >= 50 && <span className="text-orange-600 ml-2">⚠️ Higher limits consume more API credits and take longer</span>}
+            <p className="text-xs text-[var(--text-tertiary)]">
+              💡 Selected: <span className="font-medium text-[var(--text-primary)]">{limit} shorts</span>
+              {limit >= 50 && <span className="text-[var(--accent-orange)] ml-2">⚠️ Higher limits consume more API credits and take longer</span>}
             </p>
           </div>
 
           <button
             type="submit"
             disabled={loading || !channelUrl || limit < 1 || limit > 100}
-            className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium"
+            className="px-8 py-3 bg-[var(--brand-primary)] text-white rounded-lg hover:bg-[var(--brand-hover)] disabled:bg-[var(--bg-tertiary)] disabled:text-[var(--text-muted)] disabled:cursor-not-allowed font-medium transition-colors"
           >
             {loading ? `Extracting top ${limit}...` : `Extract Top ${limit} Shorts`}
           </button>
@@ -195,15 +195,15 @@ export default function ExtractForm() {
       </form>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400">
           {error}
         </div>
       )}
 
       {loading && (
         <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)]"></div>
+          <p className="mt-4 text-[var(--text-secondary)]">
             Fetching top {limit} shorts and extracting transcripts... This may take a minute.
           </p>
         </div>
@@ -211,24 +211,24 @@ export default function ExtractForm() {
 
       {result && (
         <div>
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div className="mb-6 p-4 bg-[var(--accent-emerald)]/10 border border-[var(--accent-emerald)]/30 rounded-lg">
             <div className="flex justify-between items-center flex-wrap gap-3">
               <div>
-                <p className="text-green-800 font-medium">
+                <p className="text-[var(--accent-emerald)] font-medium">
                   Successfully extracted {result.shorts.length} shorts (top {limit} requested) from {result.totalShorts} total shorts
                 </p>
-                <p className="text-green-600 text-sm mt-1">Channel ID: {result.channelId}</p>
+                <p className="text-[var(--text-secondary)] text-sm mt-1">Channel ID: {result.channelId}</p>
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={downloadTranscripts}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium text-sm"
+                  className="px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-tertiary)] font-medium text-sm transition-colors"
                 >
                   Download JSON
                 </button>
                 <button
                   onClick={downloadAsExcel}
-                  className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium text-sm flex items-center gap-1"
+                  className="px-4 py-2 bg-[var(--accent-emerald)] text-white rounded-lg hover:bg-[var(--accent-emerald)]/80 font-medium text-sm flex items-center gap-1 transition-colors"
                 >
                   <span>📊</span>
                   <span>Download Excel</span>
@@ -241,7 +241,7 @@ export default function ExtractForm() {
             {result.shorts.map((short, index) => (
               <div
                 key={short.id}
-                className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                className="bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg p-6 hover:border-[var(--border-focus)]/50 transition-all"
               >
                 <div className="flex gap-4">
                   <div className="flex-shrink-0">
@@ -254,13 +254,13 @@ export default function ExtractForm() {
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-2">
+                        <span className="inline-block px-3 py-1 bg-[var(--brand-primary)]/10 text-[var(--brand-light)] rounded-full text-sm font-medium mb-2">
                           #{index + 1}
                         </span>
-                        <h3 className="text-xl font-semibold mb-1">{short.title}</h3>
+                        <h3 className="text-xl font-semibold mb-1 text-[var(--text-primary)]">{short.title}</h3>
                       </div>
                     </div>
-                    <div className="flex gap-4 text-sm text-gray-600 mb-3">
+                    <div className="flex gap-4 text-sm text-[var(--text-secondary)] mb-3">
                       <span>{short.viewCount.toLocaleString()} views</span>
                       <span>•</span>
                       <span>{new Date(short.publishedAt).toLocaleDateString()}</span>
@@ -269,26 +269,26 @@ export default function ExtractForm() {
                       href={short.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline text-sm mb-3 inline-block"
+                      className="text-[var(--brand-primary)] hover:text-[var(--brand-light)] hover:underline text-sm mb-3 inline-block transition-colors"
                     >
                       Watch on YouTube →
                     </a>
                     <div className="mt-4">
                       <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-medium">Transcript:</h4>
+                        <h4 className="font-medium text-[var(--text-primary)]">Transcript:</h4>
                         <button
                           onClick={() => copyTranscript(short.transcript || '')}
-                          className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded"
+                          className="px-3 py-1 text-sm bg-[var(--bg-tertiary)] hover:bg-[var(--bg-secondary)] text-[var(--text-primary)] rounded transition-colors"
                         >
                           Copy
                         </button>
                       </div>
-                      <div className="p-4 bg-gray-50 rounded-lg max-h-48 overflow-y-auto">
-                        <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                      <div className="p-4 bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-lg max-h-48 overflow-y-auto">
+                        <p className="text-sm text-[var(--text-primary)] whitespace-pre-wrap">
                           {short.transcript && !short.transcript.includes('not available') && !short.transcript.includes('disabled')
                             ? short.transcript
                             : (
-                              <span className="text-gray-500 italic">
+                              <span className="text-[var(--text-tertiary)] italic">
                                 {short.transcript || 'No transcript available'}
                                 <br/><br/>
                                 <span className="text-xs">
