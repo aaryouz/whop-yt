@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import * as XLSX from 'xlsx';
 
 interface ShortVideo {
   id: string;
@@ -92,6 +93,29 @@ export default function TestPage() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  };
+
+  const downloadAsExcel = () => {
+    if (!result) return;
+
+    try {
+      // Prepare data for Excel with two columns: Shorts Link and Transcript
+      const excelData = result.shorts.map((short) => ({
+        'Shorts Link': short.url,
+        'Transcript': short.transcript || 'No transcript available'
+      }));
+
+      // Create worksheet and workbook
+      const worksheet = XLSX.utils.json_to_sheet(excelData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'YouTube Shorts Transcripts');
+
+      // Trigger download
+      XLSX.writeFile(workbook, `youtube-shorts-transcripts-${Date.now()}.xlsx`);
+    } catch (error) {
+      console.error('Error generating Excel file:', error);
+      alert('Failed to generate Excel file. Please try again.');
+    }
   };
 
   const copyTranscript = (transcript: string) => {
@@ -229,19 +253,28 @@ export default function TestPage() {
         {result && (
           <div>
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center flex-wrap gap-3">
                 <div>
                   <p className="text-green-800 font-medium">
                     ✅ Successfully extracted {result.shorts.length} shorts (top {limit} requested) from {result.totalShorts} total shorts
                   </p>
                   <p className="text-green-600 text-sm mt-1">Channel ID: {result.channelId}</p>
                 </div>
-                <button
-                  onClick={downloadTranscripts}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
-                >
-                  Download All
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={downloadTranscripts}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium text-sm"
+                  >
+                    Download JSON
+                  </button>
+                  <button
+                    onClick={downloadAsExcel}
+                    className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-medium text-sm flex items-center gap-1"
+                  >
+                    <span>📊</span>
+                    <span>Download Excel</span>
+                  </button>
+                </div>
               </div>
             </div>
 
