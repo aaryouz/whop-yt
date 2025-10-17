@@ -19,10 +19,18 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	// Check if we have the required env vars (for build time safety)
+	const hasWhopConfig = process.env.NEXT_PUBLIC_WHOP_APP_ID;
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${inter.variable} antialiased`}>
-				<WhopApp>{children}</WhopApp>
+				{hasWhopConfig ? (
+					<WhopApp>{children}</WhopApp>
+				) : (
+					// Fallback during build or if env vars are missing
+					children
+				)}
 			</body>
 		</html>
 	);
