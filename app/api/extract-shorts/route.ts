@@ -11,13 +11,23 @@ export async function POST(request: NextRequest) {
   console.log('=== EXTRACT SHORTS API CALLED ===');
 
   try {
-    const { channelUrl } = await request.json();
+    const { channelUrl, limit = 25 } = await request.json();
     console.log('Channel URL received:', channelUrl);
+    console.log('Limit received:', limit);
 
     if (!channelUrl) {
       console.log('ERROR: No channel URL provided');
       return NextResponse.json(
         { error: 'Channel URL is required', debug: 'No channelUrl in request body' },
+        { status: 400 }
+      );
+    }
+
+    // Validate limit
+    if (typeof limit !== 'number' || limit < 1 || limit > 100) {
+      console.log('ERROR: Invalid limit provided:', limit);
+      return NextResponse.json(
+        { error: 'Limit must be a number between 1 and 100', debug: `Received limit: ${limit}` },
         { status: 400 }
       );
     }
@@ -76,9 +86,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get top 25 most viral shorts
-    console.log('Getting top 25 shorts...');
-    const topShorts = getTopViralShorts(allShorts, 25);
+    // Get top N most viral shorts
+    console.log(`Getting top ${limit} shorts...`);
+    const topShorts = getTopViralShorts(allShorts, limit);
     console.log('Top shorts selected:', topShorts.length);
 
     // Fetch transcripts for the top shorts

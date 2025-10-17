@@ -27,6 +27,8 @@ interface ErrorResponse {
 
 export default function TestPage() {
   const [channelUrl, setChannelUrl] = useState('');
+  const [limit, setLimit] = useState<number>(25);
+  const [customLimit, setCustomLimit] = useState<string>('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ExtractResult | null>(null);
   const [error, setError] = useState<ErrorResponse | null>(null);
@@ -43,7 +45,7 @@ export default function TestPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ channelUrl }),
+        body: JSON.stringify({ channelUrl, limit }),
       });
 
       const data = await response.json();
@@ -109,7 +111,7 @@ export default function TestPage() {
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold mb-2">YouTube Shorts Transcript Extractor</h1>
           <p className="text-gray-600">
-            Extract transcripts from the top 25 most viral shorts from any YouTube channel
+            Extract transcripts from the most viral shorts from any YouTube channel
           </p>
           <p className="text-sm text-blue-600 mt-2">
             🧪 Test Mode - No authentication required
@@ -126,12 +128,65 @@ export default function TestPage() {
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               disabled={loading}
             />
+
+            <div className="space-y-3">
+              <label className="block text-sm font-medium text-gray-700">
+                How many top shorts do you want to extract?
+              </label>
+
+              {/* Quick select buttons */}
+              <div className="flex flex-wrap gap-2">
+                {[5, 10, 25, 50, 100].map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => {
+                      setLimit(value);
+                      setCustomLimit('');
+                    }}
+                    className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
+                      limit === value && customLimit === ''
+                        ? 'border-blue-600 bg-blue-50 text-blue-700'
+                        : 'border-gray-300 bg-white text-gray-700 hover:border-blue-400'
+                    }`}
+                    disabled={loading}
+                  >
+                    {value}
+                  </button>
+                ))}
+
+                {/* Custom input */}
+                <input
+                  type="number"
+                  min="1"
+                  max="100"
+                  value={customLimit}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setCustomLimit(value);
+                    const num = parseInt(value);
+                    if (value && !isNaN(num) && num >= 1 && num <= 100) {
+                      setLimit(num);
+                    }
+                  }}
+                  placeholder="Custom (1-100)"
+                  className="px-4 py-2 w-32 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  disabled={loading}
+                />
+              </div>
+
+              <p className="text-xs text-gray-500">
+                💡 Selected: <span className="font-medium text-gray-700">{limit} shorts</span>
+                {limit >= 50 && <span className="text-orange-600 ml-2">⚠️ Higher limits consume more API credits and take longer</span>}
+              </p>
+            </div>
+
             <button
               type="submit"
-              disabled={loading || !channelUrl}
+              disabled={loading || !channelUrl || limit < 1 || limit > 100}
               className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed font-medium"
             >
-              {loading ? 'Extracting...' : 'Extract Shorts'}
+              {loading ? `Extracting top ${limit}...` : `Extract Top ${limit} Shorts`}
             </button>
           </div>
           <p className="text-sm text-gray-500 mt-2">
@@ -166,7 +221,7 @@ export default function TestPage() {
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             <p className="mt-4 text-gray-600">
-              Fetching shorts and extracting transcripts... This may take 1-2 minutes.
+              Fetching top {limit} shorts and extracting transcripts... This may take 1-2 minutes.
             </p>
           </div>
         )}
@@ -177,7 +232,7 @@ export default function TestPage() {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-green-800 font-medium">
-                    ✅ Successfully extracted {result.shorts.length} shorts from {result.totalShorts} total shorts
+                    ✅ Successfully extracted {result.shorts.length} shorts (top {limit} requested) from {result.totalShorts} total shorts
                   </p>
                   <p className="text-green-600 text-sm mt-1">Channel ID: {result.channelId}</p>
                 </div>
