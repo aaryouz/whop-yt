@@ -1,18 +1,31 @@
 # Deployment Checklist
 
+## ✅ Build Status
+- ✅ Local build tested and passing
+- ✅ Package manager configured for npm
+- ✅ vercel.json configuration added
+
 ## Pre-Deployment
 
 ### 1. Environment Variables
-Ensure all environment variables are set in your deployment platform (Vercel, etc.):
+⚠️ **CRITICAL**: Copy your actual environment variables from `.env.local` and add them to Vercel:
 
+**Required Environment Variables:**
 ```env
-WHOP_API_KEY=hSY9Wucv-2z3XnIPC0um7_DgNJqkR_ggkZhtXiIYnu8
-NEXT_PUBLIC_WHOP_APP_ID=app_nJYlDNkveGqrUL
-NEXT_PUBLIC_WHOP_AGENT_USER_ID=user_NPusWs7BnfFlu
-NEXT_PUBLIC_WHOP_COMPANY_ID=biz_q1t1AYmgQ2gbYX
-YOUTUBE_API_KEY=AIzaSyAdH1dUFHdysoTx_ceMzoywHsFdLaKHw8c
-TRANSCRIPT_API_KEY=sk_Xa-8XMRvJLvR64aUcqiP1QZde2QlHnqbe5TwbWa0Gfc
+WHOP_API_KEY=your_actual_key_here
+NEXT_PUBLIC_WHOP_APP_ID=your_actual_app_id_here
+NEXT_PUBLIC_WHOP_AGENT_USER_ID=your_actual_user_id_here
+NEXT_PUBLIC_WHOP_COMPANY_ID=your_actual_company_id_here
+YOUTUBE_API_KEY=your_actual_youtube_key_here
+TRANSCRIPT_API_KEY=your_actual_transcript_key_here
 ```
+
+**How to add them in Vercel:**
+1. Go to your project in Vercel Dashboard
+2. Navigate to **Settings** > **Environment Variables**
+3. Add each variable above with your actual values from `.env.local`
+4. ⚠️ **Important**: Add them for all environments (Production, Preview, Development)
+5. After adding variables, trigger a new deployment
 
 ### 2. Whop App Configuration
 Update your Whop app settings in the [Developer Dashboard](https://whop.com/dashboard/developer/):
@@ -30,26 +43,36 @@ Update your Whop app settings in the [Developer Dashboard](https://whop.com/dash
 
 ## Deployment Steps (Vercel)
 
-1. **Connect Repository**
+1. **Verify Local Build**
    ```bash
-   # Push code to GitHub
+   # Test the build locally first
+   npm run build
+   # Should complete without errors
+   ```
+
+2. **Push to GitHub**
+   ```bash
    git add .
    git commit -m "Ready for deployment"
    git push origin main
    ```
 
-2. **Deploy to Vercel**
+3. **Deploy to Vercel**
    - Go to [vercel.com](https://vercel.com)
+   - Click "Add New..." > "Project"
    - Import your GitHub repository
-   - Add environment variables
-   - Deploy
+   - **Framework Preset**: Next.js (should auto-detect)
+   - **Build Command**: `npm run build` (auto-configured via vercel.json)
+   - **Install Command**: `npm install` (auto-configured via vercel.json)
+   - Add all 6 environment variables (see section 1 above)
+   - Click Deploy
 
-3. **Update Whop Settings**
+4. **Update Whop Settings**
    - Navigate to Whop Developer Dashboard
    - Update Base URL to your Vercel URL
    - Save changes
 
-4. **Test the App**
+5. **Test the App**
    - Access your app through Whop
    - Test with a channel (e.g., `@mkbhd`)
    - Verify transcripts are fetching correctly
@@ -84,6 +107,27 @@ Update your Whop app settings in the [Developer Dashboard](https://whop.com/dash
 - ✅ Download as JSON works
 - ✅ Copy to clipboard works
 - ✅ Proper messaging for unavailable transcripts
+
+## Common Build Issues & Solutions
+
+### Build Fails with "Package Manager" Error
+✅ **Fixed**: Removed pnpm configuration from package.json. Now uses npm.
+
+### Build Fails with Missing Dependencies
+- Run `npm install` locally first
+- Make sure package-lock.json is committed to git
+- Vercel will use the same dependencies
+
+### Build Fails with TypeScript Errors
+- Run `npm run build` locally to catch errors early
+- Fix all TypeScript errors before deploying
+- Check tsconfig.json is properly configured
+
+### Environment Variables Not Working
+- Ensure all 6 required variables are added in Vercel
+- Variables must be added for Production, Preview, AND Development
+- After adding/changing variables, redeploy the project
+- Check variable names match exactly (case-sensitive)
 
 ## Troubleshooting
 
